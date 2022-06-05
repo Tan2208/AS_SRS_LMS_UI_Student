@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "e7Y2YmR2SzCh+OHMe1YtfB8ORzbArGydHvq5ydzOsT8=",
+  "Source": "AS_SRS_LMS_UI_Student",
+  "BasePath": "_content/AS_SRS_LMS_UI_Student",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
