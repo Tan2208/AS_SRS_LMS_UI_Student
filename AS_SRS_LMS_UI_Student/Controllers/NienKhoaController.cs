@@ -18,7 +18,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
             => await _context.NienKhoas.ToListAsync();
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(Role), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(NienKhoa), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
