@@ -30,6 +30,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Create(BaiKiemTra baikt)
         {
+
             await _context.BaiKiemTras.AddAsync(baikt);
             await _context.SaveChangesAsync();
 
@@ -42,6 +43,8 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Update(int id, BaiKiemTra baikt)
         {
             if (id != baikt.BaiKiemTraId) return BadRequest();
+            var bktUpdate = await _context.BaiKiemTras.FindAsync(id);
+            if (bktUpdate == null) return NotFound("Không tìm thấy bài kiểm tra");
             _context.Entry(baikt).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -53,7 +56,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var baiktToDelete = await _context.BaiKiemTras.FindAsync(id);
-            if (baiktToDelete == null) return NotFound();
+            if (baiktToDelete == null) return NotFound("Không tìm thấy bài kiểm tra");
 
             _context.BaiKiemTras.Remove(baiktToDelete);
             await _context.SaveChangesAsync();

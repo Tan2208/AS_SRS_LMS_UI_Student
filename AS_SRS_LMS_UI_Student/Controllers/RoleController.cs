@@ -42,6 +42,8 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Update(int id, Role role)
         {
             if (id != role.RoleId) return BadRequest();
+            var roleUpdate = await _context.Roles.FindAsync(id);
+            if (roleUpdate == null) return NotFound("Không tìm thấy");
             _context.Entry(role).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -53,7 +55,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var roleToDelete = await _context.Roles.FindAsync(id);
-            if (roleToDelete == null) return NotFound();
+            if (roleToDelete == null) return NotFound("Không tìm thấy");
 
             _context.Roles.Remove(roleToDelete);
             await _context.SaveChangesAsync();

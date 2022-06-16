@@ -42,6 +42,8 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Update(int id, KhoaHoc khoahoc)
         {
             if (id != khoahoc.KhoaHocId) return BadRequest();
+            var khUpdate = await _context.KhoaHocs.FindAsync(id);
+            if (khUpdate == null) return NotFound("Không tìm thấy khoá học");
             _context.Entry(khoahoc).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -53,7 +55,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var khoahocToDelete = await _context.KhoaHocs.FindAsync(id);
-            if (khoahocToDelete == null) return NotFound();
+            if (khoahocToDelete == null) return NotFound("Không tìm thấy khoá học");
 
             _context.KhoaHocs.Remove(khoahocToDelete);
             await _context.SaveChangesAsync();

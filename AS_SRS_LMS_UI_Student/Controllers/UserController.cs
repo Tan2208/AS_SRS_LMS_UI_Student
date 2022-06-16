@@ -41,7 +41,10 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Update(int id, User user)
         {
-            if(id != user.UserId) return BadRequest();
+            if (id != user.UserId) return BadRequest();
+            var userUpdate = await _context.Users.FindAsync(id);
+            if (userUpdate == null)  return NotFound("Không tìm thấy user");
+           
             _context.Entry(user).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -53,7 +56,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var userToDelete = await _context.Users.FindAsync(id);
-            if (userToDelete == null) return NotFound();
+            if (userToDelete == null) return NotFound("Không tìm thấy user");
 
             _context.Users.Remove(userToDelete);
             await _context.SaveChangesAsync();

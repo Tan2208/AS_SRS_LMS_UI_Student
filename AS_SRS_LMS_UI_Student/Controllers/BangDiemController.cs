@@ -42,6 +42,8 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Update(int id, BangDiem bangdiem)
         {
             if (id != bangdiem.BangDiemId) return BadRequest();
+            var bdUpdate = await _context.BangDiems.FindAsync(id);
+            if (bdUpdate == null) return NotFound("Không tìm thấy bảng điểm");
             _context.Entry(bangdiem).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -53,7 +55,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var bangdiemToDelete = await _context.BangDiems.FindAsync(id);
-            if (bangdiemToDelete == null) return NotFound();
+            if (bangdiemToDelete == null) return NotFound("Không tìm thấy bảng điểm");
 
             _context.BangDiems.Remove(bangdiemToDelete);
             await _context.SaveChangesAsync();

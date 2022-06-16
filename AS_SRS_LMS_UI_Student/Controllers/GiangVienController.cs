@@ -42,6 +42,8 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Update(int id, GiangVien giangvien)
         {
             if (id != giangvien.GiangVienId) return BadRequest();
+            var gvUpdate = await _context.GiangViens.FindAsync(id);
+            if (gvUpdate == null) return NotFound("Không tìm thấy giảng viên");
             _context.Entry(giangvien).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -53,7 +55,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var giangvienToDelete = await _context.GiangViens.FindAsync(id);
-            if (giangvienToDelete == null) return NotFound();
+            if (giangvienToDelete == null) return NotFound("Không tìm thấy giảng viên");
 
             _context.GiangViens.Remove(giangvienToDelete);
             await _context.SaveChangesAsync();

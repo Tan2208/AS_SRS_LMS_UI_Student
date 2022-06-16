@@ -42,6 +42,8 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Update(int id, LichThi lichthi)
         {
             if (id != lichthi.LichThiId) return BadRequest();
+            var ltUpdate = await _context.LichThis.FindAsync(id);
+            if (ltUpdate == null) return NotFound("Không tìm thấy lịch thi");
             _context.Entry(lichthi).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return NoContent();
@@ -53,7 +55,7 @@ namespace AS_SRS_LMS_UI_Student.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var lichthiToDelete = await _context.LichThis.FindAsync(id);
-            if (lichthiToDelete == null) return NotFound();
+            if (lichthiToDelete == null) return NotFound("Không tìm thấy lịch thi");
 
             _context.LichThis.Remove(lichthiToDelete);
             await _context.SaveChangesAsync();
